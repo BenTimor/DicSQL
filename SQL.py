@@ -59,7 +59,10 @@ class Table(list):
 
         for select in selectors.split(","):
             if not self[select, f"WHERE {select} != '{self.db.NONE}'"]:
-                self.db.execute(f"ALTER TABLE {self.table} DROP COLUMN {select};")
+                try:
+                    self.db.execute(f"ALTER TABLE {self.table} DROP COLUMN {select};")
+                except:
+                    self.db.execute(f"DROP TABLE {self.table}")
 
     def __getitem__(self, data):
         """
