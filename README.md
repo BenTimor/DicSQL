@@ -37,8 +37,8 @@ The both values are going to be in the same row.
     table["column1", "WHERE column2='something'"] = "Another blah"
 ### Removing value
 
-    table.remove("column1") # Removes all the values in the column
-    table.remove("column1", "WHERE column2='something') # Removes all the values where the WHERE returns true
+    del table["column1"] # Removes all the values in the column
+    del table["column1", "WHERE column2='something'] # Removes all the values where the WHERE returns true
 
 ### Getting values
 First, you have to know that the values comes as a SQL-like data.
