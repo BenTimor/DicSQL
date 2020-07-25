@@ -1,1 +1,1 @@
-from SQL import DataBase
+from DicSQL.SQL import DataBase

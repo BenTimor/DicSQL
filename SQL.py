@@ -7,6 +7,7 @@ class Table(list):
     This object represents a table in a mysql database
     You don't have to call it. The MYSQL object calls it when it's needed.
     """
+
     def __init__(self, db, table, serialization=False):
         self.db = db
         self.table = table
@@ -62,7 +63,7 @@ class Table(list):
                 try:
                     self.db.execute(f"ALTER TABLE {self.table} DROP COLUMN {select};")
                 except:
-                    self.db.execute(f"DROP TABLE {self.table}")
+                    del self.db[self.table]
 
     def __getitem__(self, data):
         """
@@ -94,7 +95,21 @@ class Table(list):
 
         return data
 
+    def __delitem__(self, column):
+        """
+        Same as remove
+        """
+        if isinstance(column, tuple):
+            self.remove(column[0], column[1])
+        else:
+            self.remove(column)
+
     def remove(self, column, suffix=None):
+        """
+        Removing a column / a cell
+        :param column: The column
+        :param suffix: A 'Where' if that's a cell
+        """
         if suffix:
             self[column, suffix] = self.db.NONE
         else:
@@ -116,7 +131,7 @@ class Table(list):
         if not isinstance(values, tuple):
             values = tuple([values])
 
-        s = ["%s"]*len(values)
+        s = ["%s"] * len(values)
         values = [pickle.dumps(value).decode("latin1") for value in values]
 
         return ', '.join(s), values
@@ -137,7 +152,7 @@ class Table(list):
         if not isinstance(values, tuple):
             values = tuple([values])
 
-        s = ["%s"]*len(values)
+        s = ["%s"] * len(values)
         values = [str(value) for value in values]
 
         return ', '.join(s), values
@@ -185,6 +200,13 @@ class DataBase(list):
         :param table: The table name.
         """
         self.execute(f"CREATE TABLE {table} (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))")
+
+    def __delitem__(self, key):
+        """
+        Deleting a table
+        :param key: Table name
+        """
+        self.execute(f"DROP TABLE {key}")
 
     def execute(self, query, parameters=[]):
         """
