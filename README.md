@@ -1,15 +1,16 @@
-# SimpleSQL
-SimpleSQL does a very simple job. It lets you to use MySQL database like it was a dictionary ('HashMap' of python).
+# DicSQL
+DicSQL does a very simple job. It lets you to use MySQL database like it was a dictionary ('HashMap' of python).
 ## Requirements
 - Python 3.5+
 - pymysql
 - pickle
 ## Installation
-We don't have any official installation yet. You can download the library's folder and use it directly.
+    pip install DicSQL
+
 ## Basic Tutorial
 ### First of all, You have to connect  to the database
 
-    from SimpleSQL import DataBase
+    from DicSQL import DataBase
 
     database = DataBase(
 	    "host",
@@ -71,7 +72,7 @@ And from here you can use it as a normal table. You can insert, update and read 
     # Output > 3
 **A BIG NOTE:** You cannot use the 'remove' function on this type of table. If you want to remove a serializabled object, use a normal table for that mission.
 ## Notes
-- Everything is saved as a String on the table if you use SimpleSQL.
+- Everything is saved as a String on the table if you use DicSQL.
 - This library creates and removes tables and columns automatically. **You don't have to decide what your table looks like** or what tables you want to create. Just use it and the library will do everything for you.
 - You can specify to the DataBase object another default value for the database. You can do it by adding to its parameters `NONE="Something"`
 - This library is great for personal use and small-data. But can be a little slow for big-data projects. I recommend you to understand what's going on its files before you use it.
